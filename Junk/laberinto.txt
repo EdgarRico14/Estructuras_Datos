@@ -1,0 +1,6 @@
+Solamente se elimina la pila cuando topas, solo creas cuando llegas a un checkpoint
+solamente integras pilas cuando llegas a la meta
+un checkpoint es cuando tienes dos caminos 
+LIFO
+
+
