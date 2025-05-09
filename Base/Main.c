@@ -8,7 +8,6 @@ int main(void)
 {
 	char *cadena;
 	int opc = 0;
-	int i = 0;
 
 	Monton *monton = NULL;
 	monton = malloc(sizeof(Monton));
@@ -18,7 +17,7 @@ int main(void)
 
 	do{
 		menu();
-		scanf(" %d", opc);
+		scanf(" %d", &opc);
 		printf("\n");
 		realizar_operacion(monton, opc);
 	}while(opc != 6);
@@ -37,6 +36,6 @@ void menu(){
     printf("\n [4]Eliminar archivo");
     printf("\n [5]Eliminar todos los archivos");
     printf("\n [6]Terminar programa");
-    printf("Opcion-> ");
+    printf("\n Opcion-> ");
 
 }

@@ -2,31 +2,28 @@
 #include "Header.h"
 
 void realizar_operacion(Monton *monton, int opc) {
-    printf("\nEstado del heap antes de la operación, primeros 5:\n");
-    printf("Como arreglo:\n");
-    imprimir_heap(monton);
-    printf("\nComo árbol:\n");
-    imprimir_arbol(monton->nodos[0], 0);
-
     switch (opc) {
+        case 0: { 
+            invertir_heap(monton);
+            break;
+        }
 
-		case 0: { // Cambiar tipo de heap
-			invertir_heap(monton);
-			break;
-		}
+        case 1: { // Mostrar cola de impresión
+            printf("Mostrando cola de impresion...\n");
+            mostrar_cola(monton);
+            break;
+        }
 
-		case 1: { // Mostrar cola de impresión
-			printf("Mostrando cola de impresión...\n");
-			mostrar_cola(monton);
-			break;
-		}
-
-        case 2: { // Agregar archivo
+        case 2: { 
             Documento doc;
+
+			limpiar_buffer();
+            printf("\nNombre del archivo: ");
             doc.nombre = captura_cadena();
+            printf("\nAutor del archivo: ");
             doc.autor = captura_cadena();
-            printf("Número de páginas: ");
-            scanf("%d", &doc.paginas);
+            printf("\nNumero de paginas: ");
+            scanf(" %d", &doc.paginas);
             push_Heap(monton, doc);
             break;
         }
@@ -35,38 +32,100 @@ void realizar_operacion(Monton *monton, int opc) {
             pop_Heap(monton);
             break;
         }
-        case 4: { // Eliminar archivo
-			
 
+        case 4: { // Eliminar archivo
+            if (monton->cantidad == 0) {
+                printf("El heap esta vacio. No hay archivos para eliminar.\n");
+                break;
+            }
+
+            printf("Archivos en la cola de impresion:\n");
+            mostrar_cola(monton);
+
+            int indice;
+            printf("Selecciona el indice del archivo a eliminar (1 a %d): ", monton->cantidad);
+            scanf(" %d", &indice);
+
+            if (indice < 1 || indice > monton->cantidad) {
+                printf("Indice no valido. Operacion cancelada.\n");
+                break;
+            }
+
+            indice--;
+
+            liberar_cadenas(&monton->nodos[indice]->documento);
+            free(monton->nodos[indice]);
+
+            for (int i = indice; i < monton->cantidad - 1; i++) {
+                monton->nodos[i] = monton->nodos[i + 1];
+            }
+
+            monton->cantidad--;
+
+            if (monton->cantidad > 0) {
+                Nodo **temp = realloc(monton->nodos, sizeof(Nodo*) * monton->cantidad);
+                if (!temp) {
+                    fprintf(stderr, "Error: No se pudo reasignar memoria para el heap.\n");
+                    exit(EXIT_FAILURE);
+                }
+                monton->nodos = temp;
+
+                heapify(monton);
+                enlazar_nodos(monton);
+            } else {
+                free(monton->nodos);
+                monton->nodos = NULL;
+            }
+
+            printf("Archivo eliminado correctamente.\n");
             break;
         }
-        case 5: { // Eliminar todos los archivos
+
+        case 5: { 
+			if(monton->cantidad == 0) {
+				printf("El heap esta vacio. \n");
+				break;
+			}
             liberar_heap(monton);
             break;
         }
-		case 6: { // Terminar programa
-			printf("Terminando programa...\n");
-			liberar_heap(monton);
-			free(monton);
-			monton = NULL;
-			break;
+
+        case 6: { 
+    		printf("Terminando programa...\n");
+
+    		if (monton->nodos != NULL) {
+        		printf("Liberando memoria del heap...\n");
+        		liberar_heap(monton);
+    		}
+
+ 			free(monton);
+    		monton = NULL;
+
+    		printf("Programa terminado correctamente.\n");
+    		break;
 		}
+
         default:
-            printf("Opción no válida.\n");
+            printf("Opcion no valida.\n");
             break;
     }
 
-    printf("\nEstado del heap después de la operación, primeros 5:\n");
-    printf("Como arreglo:\n");
-    imprimir_heap(monton);
-    printf("\nComo árbol:\n");
-    imprimir_arbol(monton->nodos[0], 0);
+    // Mover el bloque de impresión aquí
+    if (monton->cantidad > 0) {
+        printf("\nEstado del heap despues de la operacion, primeros 5:\n");
+        printf("Como arreglo:\n");
+        imprimir_heap(monton);
+        printf("\nComo arbol:\n");
+        imprimir_arbol(monton->nodos[0], 0);
+    } else {
+        printf("\nEl heap esta vacio. No hay nada que mostrar.\n");
+    }
 }
 
 void mostrar_cola(Monton *monton){
 	int i;
 	for(i = 0; i < monton->cantidad; i++){
-		printf("[%d] Nombre: %s, Autor: %s, Paginas: %d\n", i+1 , monton->nodos[i]->documento.nombre,monton->nodos[i]->documento.autor,monton->nodos[i]->documento.paginas);
+		printf("[%d] Nombre: %s, Autor: %s, Paginas: %d\n", i+1 , monton->nodos[i]->documento.nombre, monton->nodos[i]->documento.autor, monton->nodos[i]->documento.paginas);
 	}
 }
 
@@ -83,6 +142,7 @@ void push_Heap(Monton *monton, Documento documento){
 
 	monton->nodos[monton->cantidad - 1] = nuevo;
 	heapify(monton);
+	enlazar_nodos(monton);
 
 }
 
@@ -120,13 +180,16 @@ void heapify_maximo(Monton *monton, int i){
 	}
 }
 
-void heapify(Monton *monton){
-	if(monton->tipo == MAXIMO)
-		heapify_maximo(monton, 0);
-	else if(monton->tipo == MINIMO)
-		heapify_minimo(monton, 0);
-	else
-		return;
+void heapify(Monton *monton) {
+    // Reorganizar el heap desde el último nodo interno hacia el nodo raíz
+    for (int i = (monton->cantidad / 2) - 1; i >= 0; i--) {
+        if (monton->tipo == MAXIMO)
+            heapify_maximo(monton, i);
+        else if (monton->tipo == MINIMO)
+            heapify_minimo(monton, i);
+    }
+
+    enlazar_nodos(monton); // Enlazar nodos después de reorganizar el heap
 }
 
 
@@ -144,14 +207,12 @@ void pop_Heap(Monton *monton) {
     monton->cantidad--;
     free(aux);
 
-    // Si el heap está vacío, liberar la memoria y asignar NULL
     if (monton->cantidad == 0) {
         free(monton->nodos);
         monton->nodos = NULL;
         return;
     }
 
-    // Reducir el tamaño del arreglo
     Nodo **temp = realloc(monton->nodos, sizeof(Nodo*) * monton->cantidad);
     if (!temp) {
         fprintf(stderr, "Error: No se pudo reasignar memoria para el heap.\n");
@@ -159,19 +220,20 @@ void pop_Heap(Monton *monton) {
     }
     monton->nodos = temp;
 
-    // Reorganizar el heap
     heapify(monton);
+    enlazar_nodos(monton);
 }
 
 void invertir_heap(Monton *monton) {
     if (monton->tipo == MINIMO) {
-        monton->tipo = MAXIMO; // Cambiar a heap máximo
-        printf("Cambiando a heap máximo (prioridad: mayor cantidad de páginas primero).\n");
+        monton->tipo = MAXIMO; 
+        printf("Cambiando a heap maximo.\n");
     } else {
-        monton->tipo = MINIMO; // Cambiar a heap mínimo
-        printf("Cambiando a heap mínimo (prioridad: menor cantidad de páginas primero).\n");
+        monton->tipo = MINIMO; 
+        printf("Cambiando a heap minimo.\n");
     }
-    heapify(monton); // Reorganizar el heap según el nuevo tipo
+    heapify(monton); 
+	enlazar_nodos(monton); 	
 }
 
 void imprimir_heap(Monton *monton){
@@ -182,26 +244,49 @@ void imprimir_heap(Monton *monton){
 }
 
 
-void imprimir_arbol(Nodo *nodo, int nivel){
-	int i;
-	if (nodo != NULL)
-	{
-		for (i = 0; i < nivel; i++)
-			printf(" |      ");
-		printf(" |____Nombre: %s, Autor: %s, Paginas: %d\n", nodo->documento.nombre,nodo->documento.autor,nodo->documento.paginas);
-		imprimir_arbol(nodo->izq, nivel + 1);
-		imprimir_arbol(nodo->dch, nivel + 1);
-	}
+
+void imprimir_arbol(Nodo *nodo, int nivel) {
+    int i;
+    if (nodo != NULL) {
+        printf(" Nombre %s, Autor: %s, Paginas: %d", nodo->documento.nombre, nodo->documento.autor, 
+		nodo->documento.paginas);
+
+        if (nodo->dch) {
+            printf("\n");
+            for (i = 0; i < nivel + 1; i++) {
+                if (i == nivel)
+                    printf(" |____R ");
+                else
+                    printf(" |      ");
+            }
+            imprimir_arbol(nodo->dch, nivel + 1);
+        }
+
+        if (nodo->izq) {
+            printf("\n");
+            for (i = 0; i < nivel + 1; i++) {
+                if (i == nivel)
+                    printf(" |____L ");
+                else
+                    printf(" |      ");
+            }
+            imprimir_arbol(nodo->izq, nivel + 1);
+        }
+    }
 }
 
-void liberar_heap(Monton *monton){
-	int i;
-	for(i = 0; i < monton->cantidad; i++){
-		liberar_nodo(monton->nodos[i]);
-	}
-	free(monton->nodos);
-	monton->nodos = NULL;
-	monton->cantidad = 0;
+void liberar_heap(Monton *monton) {
+    if (monton->nodos != NULL) { // Verifica si monton->nodos no es NULL
+        for (int i = 0; i < monton->cantidad; i++) {
+            if (monton->nodos[i] != NULL) { // Verifica si el nodo no es NULL
+                liberar_nodo(monton->nodos[i]);
+                monton->nodos[i] = NULL; // Establece el nodo en NULL después de liberarlo
+            }
+        }
+        free(monton->nodos); // Libera el arreglo de nodos
+        monton->nodos = NULL;
+    }
+    monton->cantidad = 0;
 }
 
 void liberar_nodo(Nodo *nodo){
@@ -269,5 +354,31 @@ void liberar_cadenas(Documento* documento)
 	free(documento->autor);
 	documento->nombre = NULL;
 	documento->autor = NULL;	
+}
+
+
+void enlazar_nodos(Monton *monton) {
+    if (monton->cantidad == 0) {
+        printf("No hay nodos para enlazar.\n");
+        return;
+    }
+
+    for (int i = 0; i < monton->cantidad; i++) {
+        int indice_izq = 2 * i + 1;
+        int indice_dch = 2 * i + 2;
+
+        if (indice_izq < monton->cantidad) {
+            monton->nodos[i]->izq = monton->nodos[indice_izq];
+        } else {
+            monton->nodos[i]->izq = NULL; 
+        }
+
+		if (indice_dch < monton->cantidad) {
+            monton->nodos[i]->dch = monton->nodos[indice_dch];
+        } else {
+            monton->nodos[i]->dch = NULL; 
+        }
+
+    }
 }
 
