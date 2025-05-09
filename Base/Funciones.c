@@ -9,6 +9,8 @@ void realizar_operacion(Monton *monton, int opc) {
         }
 
         case 1: { // Mostrar cola de impresión
+            if(monton->cantidad == 0)
+                break;
             printf("Mostrando cola de impresion...\n");
             mostrar_cola(monton);
             break;
@@ -28,12 +30,12 @@ void realizar_operacion(Monton *monton, int opc) {
             break;
         }
 
-        case 3: { // Procesar/Imprimir archivo
+        case 3: { 
             pop_Heap(monton);
             break;
         }
 
-        case 4: { // Eliminar archivo
+        case 4: { 
             if (monton->cantidad == 0) {
                 printf("El heap esta vacio. No hay archivos para eliminar.\n");
                 break;
@@ -63,10 +65,9 @@ void realizar_operacion(Monton *monton, int opc) {
             monton->cantidad--;
 
             if (monton->cantidad > 0) {
-                Nodo **temp = realloc(monton->nodos, sizeof(Nodo*) * monton->cantidad);
-                if (!temp) {
-                    fprintf(stderr, "Error: No se pudo reasignar memoria para el heap.\n");
-                    exit(EXIT_FAILURE);
+                Nodo **temp = NULL;
+                while (!temp) {
+                    temp = realloc(monton->nodos, sizeof(Nodo*) * monton->cantidad);
                 }
                 monton->nodos = temp;
 
@@ -110,7 +111,6 @@ void realizar_operacion(Monton *monton, int opc) {
             break;
     }
 
-    // Mover el bloque de impresión aquí
     if (monton->cantidad > 0) {
         printf("\nEstado del heap despues de la operacion, primeros 5:\n");
         printf("Como arreglo:\n");
@@ -181,7 +181,6 @@ void heapify_maximo(Monton *monton, int i){
 }
 
 void heapify(Monton *monton) {
-    // Reorganizar el heap desde el último nodo interno hacia el nodo raíz
     for (int i = (monton->cantidad / 2) - 1; i >= 0; i--) {
         if (monton->tipo == MAXIMO)
             heapify_maximo(monton, i);
@@ -189,18 +188,18 @@ void heapify(Monton *monton) {
             heapify_minimo(monton, i);
     }
 
-    enlazar_nodos(monton); // Enlazar nodos después de reorganizar el heap
+    enlazar_nodos(monton); 
 }
 
 
 void pop_Heap(Monton *monton) {
     if (monton->cantidad == 0) {
-        printf("El heap está vacío. No hay nada que procesar.\n");
+        printf("El heap esta vacio.\n");
         return;
     }
 
     Nodo *aux = monton->nodos[0];
-    printf("Procesando archivo: %s, Autor: %s, Paginas: %d\n", aux->documento.nombre, aux->documento.autor, aux->documento.paginas);
+    printf("Procesando archivo...\nNombre: %s, Autor: %s, Paginas: %d\n", aux->documento.nombre, aux->documento.autor, aux->documento.paginas);
     liberar_cadenas(&aux->documento);
 
     monton->nodos[0] = monton->nodos[monton->cantidad - 1];
@@ -213,10 +212,9 @@ void pop_Heap(Monton *monton) {
         return;
     }
 
-    Nodo **temp = realloc(monton->nodos, sizeof(Nodo*) * monton->cantidad);
-    if (!temp) {
-        fprintf(stderr, "Error: No se pudo reasignar memoria para el heap.\n");
-        exit(EXIT_FAILURE);
+    Nodo **temp = NULL;
+    while (!temp) {
+        temp = realloc(monton->nodos, sizeof(Nodo*) * monton->cantidad);
     }
     monton->nodos = temp;
 
@@ -248,7 +246,7 @@ void imprimir_heap(Monton *monton){
 void imprimir_arbol(Nodo *nodo, int nivel) {
     int i;
     if (nodo != NULL) {
-        printf(" Nombre %s, Autor: %s, Paginas: %d", nodo->documento.nombre, nodo->documento.autor, 
+        printf(" Nombre: %s, Autor: %s, Paginas: %d", nodo->documento.nombre, nodo->documento.autor, 
 		nodo->documento.paginas);
 
         if (nodo->dch) {
@@ -276,14 +274,14 @@ void imprimir_arbol(Nodo *nodo, int nivel) {
 }
 
 void liberar_heap(Monton *monton) {
-    if (monton->nodos != NULL) { // Verifica si monton->nodos no es NULL
+    if (monton->nodos != NULL) { 
         for (int i = 0; i < monton->cantidad; i++) {
-            if (monton->nodos[i] != NULL) { // Verifica si el nodo no es NULL
+            if (monton->nodos[i] != NULL) { 
                 liberar_nodo(monton->nodos[i]);
-                monton->nodos[i] = NULL; // Establece el nodo en NULL después de liberarlo
+                monton->nodos[i] = NULL; 
             }
         }
-        free(monton->nodos); // Libera el arreglo de nodos
+        free(monton->nodos); 
         monton->nodos = NULL;
     }
     monton->cantidad = 0;

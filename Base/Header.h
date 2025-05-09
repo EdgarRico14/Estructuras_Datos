@@ -42,14 +42,14 @@ void liberar_nodo(Nodo*);
 void realizar_operacion(Monton *, int);
 void mostrar_cola(Monton *);
 void push_Heap(Monton *, Documento);
+void pop_Heap(Monton *);
 void heapify(Monton *);
 void heapify_minimo(Monton *, int);
 void heapify_maximo(Monton *, int);
-void pop_Heap(Monton *);
 void invertir_heap(Monton *);
+void liberar_heap(Monton *);
 void imprimir_heap(Monton *);
 void imprimir_arbol(Nodo *, int);
-void liberar_heap(Monton *);
 void enlazar_nodos(Monton *);
 
 
