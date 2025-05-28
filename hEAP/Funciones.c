@@ -8,7 +8,7 @@ void realizar_operacion(Monton *monton, int opc) {
             break;
         }
 
-        case 1: { // Mostrar cola de impresión
+        case 1: {
             if(monton->cantidad == 0)
                 break;
             printf("Mostrando cola de impresion...\n");
