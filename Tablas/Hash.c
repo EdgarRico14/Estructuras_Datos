@@ -148,9 +148,18 @@ void eliminar_libro_tabla(HashTable **tabla, Libro *book) {
         
         if ((*tabla)->books[index] == book) {
             (*tabla)->books[index] = NULL;
-            (*tabla)->indices[index] = -1;
+            
+            for (int j = 0; j < (*tabla)->stored; j++) {
+                if ((*tabla)->indices[j] == index) {
+                    for (int k = j; k < (*tabla)->stored - 1; k++) {
+                        (*tabla)->indices[k] = (*tabla)->indices[k + 1];
+                    }
+                    break;
+                }
+            }
+            
             (*tabla)->stored--;
-			printf("\nLibro eliminado de la tabla\n");
+            printf("\nLibro eliminado de la tabla\n");
             return;
         }
 
@@ -164,14 +173,14 @@ HashTable* remap(HashTable *hashtable){
 
 	int stored = hashtable->stored; 
 
-	HashTable *nueva = crear_tabla(hashtable->key ,  hashtable->folding );
+	HashTable *nueva = crear_tabla(hashtable->key, hashtable->folding);
 
 	free(nueva->indices);
 	free(nueva->books);
 
-	nueva->size = (stored == 0) ? 2 : (int) ceil( (float)stored*100/60 );
+	nueva->size = (stored == 0) ? 2 : (int) ceil((float)stored*100/60);
 
-	nueva->books = calloc( nueva->size ,sizeof(Libro*));
+	nueva->books = calloc(nueva->size, sizeof(Libro*));
 	if (stored == 0)
 		nueva->indices = calloc(1, sizeof(unsigned int));
 	else

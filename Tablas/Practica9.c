@@ -38,7 +38,7 @@ int main(void)
 
     do{
         printf("\n\n----- LISTADO DE LIBROS DISPONIBLES -----\n");
-        int contador = 0;
+        
         for(i = 0; i < CANT_LIBROS; i++){
             if(strcmp(libros[i].isbn, " ") != 0) {
                 printf("\n");

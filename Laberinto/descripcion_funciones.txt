@@ -1,0 +1,62 @@
+DESCRIPCIÓN DE FUNCIONES - PROGRAMA DEL LABERINTO
+=================================================
+
+Este documento explica qué hace cada función en el programa que resuelve laberintos
+usando una pila para encontrar el camino desde el punto A hasta el punto B.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Un laberinto representado como una cuadrícula de caracteres
+- Una pila que guarda el camino que estamos siguiendo
+- Coordenadas (x, y) para ubicar posiciones en el laberinto
+- Direcciones de movimiento (arriba, abajo, izquierda, derecha)
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El cerebro que controla todo
+   - Crea el laberinto y busca el punto de inicio (A)
+   - Llama a la función que encuentra el camino
+   - Muestra el resultado: si encontró camino o no
+   - Al final muestra el laberinto con el camino marcado
+
+2. crear_laberinto() - Construye el mapa del laberinto
+   - Toma una cadena de texto con el diseño del laberinto
+   - La convierte en una cuadrícula que el programa puede usar
+   - Define dónde están las paredes (x), espacios libres (*), inicio (A) y meta (B)
+
+3. encontrar_camino() - El explorador que busca la salida
+   - Usa el método de "prueba y error" como si fueras caminando
+   - Intenta ir en cada dirección: derecha, izquierda, abajo, arriba
+   - Si llega a un callejón sin salida, regresa por donde vino
+   - Marca los lugares visitados para no repetir caminos
+
+4. crear_nodo() - Crea una "nota" del lugar donde estamos
+   - Guarda las coordenadas (x, y) y la dirección que tomamos
+   - Es como dejar una marca de pan en el camino
+
+5. inicializar_pila() - Prepara la libreta de caminos
+   - Crea una pila vacía para empezar a guardar el recorrido
+   - Es como tener una libreta limpia para anotar el camino
+
+6. push() - Anota un paso en nuestro camino
+   - Cada vez que nos movemos, guardamos dónde estamos
+   - Es como escribir "fui hacia la derecha" en nuestra libreta
+
+7. pop() - Borra el último paso cuando nos equivocamos
+   - Cuando llegamos a un callejón sin salida, borramos el último movimiento
+   - Es como borrar la última línea de nuestra libreta
+
+8. pila_vacia() - Revisa si ya no tenemos caminos guardados
+   - Nos dice si la libreta está vacía
+   - Útil para saber si podemos retroceder o no
+
+9. desplegar() - Muestra todo el camino que encontramos
+   - Lee toda nuestra libreta y muestra cada paso
+   - Nos dice exactamente cómo llegar desde A hasta B
+
+10. vaciar() - Limpia toda la libreta
+    - Borra todos los pasos guardados y libera la memoria
+    - Es como arrancar todas las hojas de la libreta
+
+

@@ -1,0 +1,101 @@
+DESCRIPCIÓN DE FUNCIONES - CONVERSOR Y EVALUADOR DE EXPRESIONES (Versión 2)
+==============================================================================
+
+Este documento explica qué hace cada función en el programa avanzado que no solo convierte
+expresiones matemáticas a formato postfijo, sino que también las evalúa usando árboles.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Expresiones matemáticas en formato infijo y postfijo
+- Un árbol binario que representa la expresión matemática
+- Variables con letras (A-Z mayúsculas y a-z minúsculas) y sus valores numéricos
+- Operaciones matemáticas básicas y potencias
+- Resultados calculados de las expresiones
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El director del programa avanzado
+   - Controla un menú con 4 opciones principales
+   - Maneja la expresión desde la conversión hasta la evaluación
+   - Guarda los valores de variables para reutilizarlos
+   - Libera toda la memoria al terminar
+
+2. postfix() - El convertidor de infijo a postfijo (heredado de versión 1)
+   - Convierte expresiones normales a formato postfijo
+   - Usa el mismo algoritmo que la versión anterior
+   - Prepara la expresión para crear el árbol
+
+3. crearArbolPostfix() - Constructor del árbol de expresión
+   - Toma la expresión postfijo y construye un árbol binario
+   - Cada operador es un nodo padre con dos hijos
+   - Las variables/números son las hojas del árbol
+   - El árbol representa la estructura de la expresión
+
+4. evaluarExpresion() - Capturador de valores de variables
+   - Recorre el árbol buscando variables (letras)
+   - Te pide el valor de cada variable solo una vez
+   - Guarda los valores para usar en el cálculo final
+   - Distingue entre mayúsculas (A-Z) y minúsculas (a-z)
+
+5. capturarValorOperando() - Recolector de valores individuales
+   - Cuando encuentra una variable nueva, te pide su valor
+   - Guarda el valor para que no te lo vuelva a preguntar
+   - Asigna el valor numérico al nodo correspondiente del árbol
+
+6. evaluarArbol() - La calculadora del árbol
+   - Recorre el árbol y calcula el resultado final
+   - Aplica las operaciones en el orden correcto
+   - Maneja suma, resta, multiplicación, división y potencias
+   - Devuelve el resultado numérico de toda la expresión
+
+7. imprimirCaracteresOrden() - Visualizador de la expresión original
+   - Muestra la expresión con las variables originales
+   - Reconstruye la expresión infija desde el árbol
+   - Agrega paréntesis para claridad
+
+8. imprimirFlotantesOrden() - Visualizador con valores numéricos
+   - Muestra la misma expresión pero con los números en lugar de variables
+   - Te permite ver exactamente qué se está calculando
+   - Útil para verificar que los valores son correctos
+
+9. crearNodo() - Constructor de nodos del árbol
+   - Crea espacios para operadores y operandos
+   - Prepara los nodos con espacio para hijos izquierdo y derecho
+   - Inicializa correctamente cada parte del árbol
+
+10. infixValido() - Validador de expresiones
+    - Revisa que la expresión esté bien escrita
+    - Verifica que los paréntesis estén balanceados
+    - Se asegura de que solo contenga caracteres válidos
+
+11. eliminarPostorden() - Destructor del árbol
+    - Borra todo el árbol liberando memoria
+    - Va nodo por nodo eliminando desde las hojas hasta la raíz
+    - Evita problemas de memoria
+
+12. limpiarArreglos() - Limpiador de variables
+    - Resetea todos los valores de variables guardados
+    - Prepara el programa para una nueva expresión
+    - Marca todas las variables como no capturadas
+
+13. imprimir_arbol() - Visualizador de estructura
+    - Muestra la estructura del árbol de forma visual
+    - Te ayuda a entender cómo está organizada la expresión
+    - Útil para depurar y aprender
+
+Funciones de pila (heredadas y mejoradas):
+14. push(), pop(), peek(), vacia() - Manejo básico de pila
+15. pushNodo() - Versión especial para manejar nodos del árbol
+
+
+¿QUÉ HACE EL PROGRAMA EN GENERAL?
+=================================
+Esta versión avanzada es como una calculadora científica programable que:
+
+1. **Acepta expresiones con variables**: Puedes usar A, B, x, y, etc.
+2. **Construye un modelo interno**: Crea un árbol que representa tu expresión
+3. **Te pide los valores una sola vez**: Reutiliza los valores para cálculos
+4. **Calcula el resultado exacto**: Aplica todas las reglas matemáticas correctamente
+5. **Muestra el proceso completo**: Te explica qué está calculando
+6. **Maneja memoria inteligentemente**: No desperdicia recursos

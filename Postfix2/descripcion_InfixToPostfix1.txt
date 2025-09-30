@@ -1,0 +1,68 @@
+DESCRIPCIÓN DE FUNCIONES - CONVERSOR INFIJO A POSTFIJO (Versión 1)
+====================================================================
+
+Este documento explica qué hace cada función en el programa que convierte expresiones
+matemáticas del formato normal (infijo) al formato postfijo usando una pila.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Expresiones matemáticas en formato infijo (como escribimos normalmente): A + B * C
+- Expresiones en formato postfijo (como las entienden algunas calculadoras): A B C * +
+- Una pila para guardar operadores temporalmente
+- Reglas de precedencia para saber qué operación hacer primero
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El controlador principal
+   - Te presenta un menú simple con dos opciones
+   - Te permite escribir una expresión matemática
+   - Llama al convertidor y muestra el resultado
+   - Se queda corriendo hasta que decidas salir
+
+2. postfix() - El convertidor principal (el corazón del programa)
+   - Toma una expresión normal y la convierte a formato postfijo
+   - Lee la expresión carácter por carácter
+   - Decide si cada carácter es un número/letra o un operador
+   - Usa una pila para ordenar correctamente los operadores
+
+3. crearNodo() - Crea un espacio para guardar un carácter
+   - Cada operador necesita un lugar en la pila
+   - Prepara un contenedor para un símbolo (+, -, *, /, etc.)
+
+4. push() - Guarda un operador en la pila
+   - Cuando encuentra un operador, lo pone en la pila
+   - Es como apilar platos: el último que entra es el primero que sale
+
+5. pop() - Saca un operador de la pila
+   - Quita el operador que está hasta arriba
+   - Lo usa para ponerlo en la expresión final
+
+6. peek() - Mira cuál operador está hasta arriba sin sacarlo
+   - Es como echar un vistazo al plato de arriba sin tomarlo
+   - Útil para comparar precedencias
+
+7. vacia() - Revisa si la pila está vacía
+   - Te dice si ya no hay operadores guardados
+   - Importante para saber cuándo parar
+
+8. esOperando() - Identifica si un carácter es un número o letra
+   - Distingue entre operandos (A, B, C, 1, 2, 3) y operadores (+, -, *, /)
+   - Los operandos van directo al resultado
+
+9. precedencia() - Define qué operaciones son más importantes
+   - Multiplicación (*) y división (/) tienen precedencia 2
+   - Suma (+) y resta (-) tienen precedencia 1
+   - Potencia (^) tiene precedencia 3 (la más alta)
+   - Como las reglas matemáticas que aprendiste en la escuela
+
+10. liberarPila() - Limpia toda la memoria usada
+    - Borra todos los operadores guardados
+    - Libera el espacio que ocupaba la pila
+
+11. menu() - Muestra las opciones disponibles
+    - Te presenta las dos opciones: convertir o salir
+    - Hace que el programa sea fácil de usar
+
+
+

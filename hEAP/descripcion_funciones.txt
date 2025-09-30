@@ -1,0 +1,111 @@
+DESCRIPCIÓN DE FUNCIONES - COLA DE IMPRESIÓN CON PRIORIDADES
+===========================================================
+
+Este documento explica qué hace cada función en el programa que simula una cola
+de impresión inteligente usando un heap (montón) para manejar prioridades.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Una cola de archivos esperando a ser impresos
+- Cada archivo tiene un nombre y una prioridad (número que indica qué tan urgente es)
+- Un sistema que puede funcionar como cola mínima (menor prioridad primero) o máxima (mayor prioridad primero)
+- Operaciones para agregar, procesar y eliminar archivos de la cola
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El controlador de la cola de impresión (en Main.c)
+   - Inicializa la cola de impresión vacía
+   - Presenta un menú con 7 opciones para manejar la cola
+   - Se queda corriendo hasta que elijas terminar
+   - Coordina todas las operaciones de la cola
+
+2. menu() - El mostrador de opciones (en Main.c)
+   - Te presenta las 7 opciones disponibles:
+     * Cambiar tipo de prioridad (mínimo o máximo)
+     * Mostrar la cola actual
+     * Agregar archivo a imprimir
+     * Procesar/imprimir el próximo archivo
+     * Eliminar un archivo específico
+     * Eliminar todos los archivos
+     * Terminar el programa
+
+3. realizar_operacion() - El ejecutor de comandos (en Funciones.c)
+   - Toma tu elección del menú y ejecuta la operación correspondiente
+   - Es como el operador que maneja todos los botones de la impresora
+   - Coordina entre el menú y las funciones específicas
+
+4. cambiar_prioridad() - El cambiador de modo (en Funciones.c)
+   - Te permite cambiar entre modo mínimo y máximo
+   - Modo mínimo: imprime primero los archivos con menor número de prioridad
+   - Modo máximo: imprime primero los archivos con mayor número de prioridad
+   - Como cambiar de "urgente primero" a "menos urgente primero"
+
+5. mostrar_cola() - El visualizador de la cola (en Funciones.c)
+   - Te muestra todos los archivos esperando en la cola
+   - Indica qué archivo será el próximo en imprimirse
+   - Como ver la lista de trabajos pendientes en una impresora
+
+6. agregar_archivo() - El receptor de nuevos trabajos (en Funciones.c)
+   - Te permite agregar un nuevo archivo a la cola
+   - Te pide el nombre del archivo y su prioridad
+   - Automáticamente lo coloca en la posición correcta según su prioridad
+
+7. procesar_archivo() - El impresor de archivos (en Funciones.c)
+   - Toma el archivo con mayor prioridad y lo "imprime"
+   - Lo quita de la cola después de procesarlo
+   - Como cuando la impresora termina un trabajo y pasa al siguiente
+
+8. eliminar_archivo() - El cancelador de trabajos (en Funciones.c)
+   - Te permite cancelar un archivo específico de la cola
+   - Busca el archivo por nombre y lo elimina
+   - Como cancelar un trabajo de impresión que ya no necesitas
+
+9. eliminar_todos() - El limpiador de cola (en Funciones.c)
+   - Cancela todos los archivos de la cola de una vez
+   - Deja la cola completamente vacía
+   - Como hacer "cancelar todos" en una impresora
+
+10. insertar_heap() - El organizador automático (en Funciones.c)
+    - Agrega un nuevo archivo manteniendo el orden de prioridades
+    - Se asegura de que el archivo con mayor prioridad esté siempre arriba
+    - Es la magia que mantiene la cola organizada automáticamente
+
+11. extraer_heap() - El extractor del más prioritario (en Funciones.c)
+    - Quita el archivo con mayor prioridad de la cola
+    - Reorganiza automáticamente el resto para mantener el orden
+    - Como sacar el trabajo más urgente de la pila
+
+12. heapify_up() - El escalador de prioridades (en Funciones.c)
+    - Cuando agregas un archivo, lo mueve hacia arriba si tiene alta prioridad
+    - Es como cuando un trabajo urgente se salta la fila
+    - Mantiene la regla de que lo más prioritario está arriba
+
+13. heapify_down() - El reorganizador después de extraer (en Funciones.c)
+    - Cuando quitas el archivo más prioritario, reorganiza lo que queda
+    - Se asegura de que el siguiente más prioritario suba al tope
+    - Como reordenar la fila después de que alguien salga
+
+14. intercambiar() - El cambiador de posiciones (en Funciones.c)
+    - Intercambia la posición de dos archivos en la cola
+    - Usado por las funciones de reorganización automática
+    - Como cambiar dos trabajos de lugar en la fila
+
+15. buscar_archivo() - El localizador de trabajos (en Funciones.c)
+    - Busca un archivo específico en la cola por su nombre
+    - Devuelve la posición donde está o -1 si no lo encuentra
+    - Como buscar un trabajo específico en la lista de impresión
+
+¿CÓMO FUNCIONA UN HEAP (MONTÓN)?
+================================
+Un heap es como una pirámide de prioridades:
+
+**Estructura:**
+- Es como un árbol binario, pero almacenado en un arreglo
+- El elemento más prioritario siempre está en la cima (posición 0)
+- Cada padre tiene prioridad mayor (o menor) que sus hijos
+
+**Reglas:**
+- Heap máximo: cada padre ≥ sus hijos (mayor prioridad arriba)
+- Heap mínimo: cada padre ≤ sus hijos (menor prioridad arriba)
+

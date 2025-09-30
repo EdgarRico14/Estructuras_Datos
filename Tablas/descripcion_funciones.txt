@@ -1,0 +1,95 @@
+DESCRIPCIÓN DE FUNCIONES - BIBLIOTECA CON TABLAS HASH
+=====================================================
+
+Este documento explica qué hace cada función en el programa que maneja una biblioteca
+usando tablas hash para búsquedas súper rápidas de libros.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Una colección de libros con ISBN, título, autor y fecha de publicación
+- Seis tablas hash diferentes, cada una optimizada para un tipo de búsqueda específica
+- Búsquedas individuales y por rangos usando diferentes criterios
+- Un árbol auxiliar para mostrar resultados ordenados cuando hay múltiples coincidencias
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El director de la biblioteca digital (en Practica9.c)
+   - Carga todos los libros y crea las seis tablas hash especializadas
+   - Muestra constantemente la lista de libros disponibles
+   - Presenta un menú con 5 tipos de búsqueda diferentes
+   - Coordina todas las operaciones de búsqueda
+
+2. menu() - El mostrador de opciones de búsqueda (en Practica9.c)
+   - Te presenta las 5 maneras de buscar libros:
+     * Por ISBN (código único)
+     * Por título (exacto o por inicial)
+     * Por autor (exacto o por inicial)
+     * Por fecha (año específico o rango)
+     * Salir del programa
+
+3. crear_tabla() - El constructor de índices rápidos (en Hash.c)
+   - Crea una tabla hash especializada para un tipo específico de dato
+   - Cada tabla está optimizada para un campo diferente (ISBN, título, etc.)
+   - Es como crear un catálogo súper rápido para cada tipo de búsqueda
+
+4. insertar() - El catalogador automático (en Hash.c)
+   - Agrega un libro a la tabla hash correspondiente
+   - Calcula automáticamente dónde guardarlo para encontrarlo rápido después
+   - Como poner un libro en el estante correcto de la biblioteca
+
+5. buscar_por_isbn() - El buscador por código (en Hash.c)
+   - Encuentra un libro específico usando su ISBN único
+   - Búsqueda súper rápida porque cada ISBN va a una posición específica
+   - Como buscar un producto por código de barras
+
+6. buscar_por_titulo() - El buscador por nombre exacto (en Hash.c)
+   - Busca un libro que coincida exactamente con el título
+   - Si hay varios libros con el mismo título, los organiza en un árbol
+   - Como buscar un libro específico en el catálogo
+
+7. buscar_por_autor() - El buscador de obras por escritor (en Hash.c)
+   - Encuentra todos los libros de un autor específico
+   - Los organiza en un árbol para mostrarlos ordenados
+   - Como ver toda la bibliografía de un escritor
+
+8. rango_por_iniciales() - El explorador alfabético (en Hash.c)
+   - Busca todos los libros cuyos títulos o autores empiecen con una letra específica
+   - Útil para explorar secciones del catálogo
+   - Como revisar todos los libros que empiecen con "A", luego "B", etc.
+
+9. rango_por_fechas() - El explorador temporal (en Hash.c)
+   - Busca todos los libros publicados en un año específico
+   - Se puede usar para rangos de años buscando año por año
+   - Como estudiar la literatura de una época determinada
+
+10. folding_cadena() - El calculador de posiciones (en Hash.c)
+    - Toma un texto (título, autor, etc.) y calcula dónde guardarlo en la tabla
+    - Usa un algoritmo especial llamado "folding" para distribuir uniformemente
+    - Es la magia que hace que las búsquedas sean súper rápidas
+
+11. obtener_libros() - El cargador de la biblioteca (en Libro.c)
+    - Carga todos los libros desde un archivo o los tiene preconfigurados
+    - Proporciona la base de datos completa para trabajar
+    - Como abrir la biblioteca y tener acceso a todos los libros
+
+12. imprimir() - El mostrador de información (en Libro.c)
+    - Muestra toda la información de un libro de forma clara y ordenada
+    - Incluye ISBN, título, autor y fecha de publicación
+    - Como la ficha completa de cada libro
+
+13. insertar_arbol() - El organizador de resultados múltiples (en Arbol.c)
+    - Cuando una búsqueda encuentra varios libros, los organiza en un árbol
+    - Mantiene los resultados ordenados alfabéticamente
+    - Como organizar una lista de resultados de A a Z
+
+14. inorden() - El mostrador de resultados ordenados (en Arbol.c)
+    - Muestra todos los libros de un árbol en orden alfabético
+    - Útil cuando hay múltiples coincidencias de una búsqueda
+    - Como leer una lista ordenada de resultados
+
+15. liberar_arbol() - El limpiador de memoria temporal (en Arbol.c)
+    - Borra el árbol temporal usado para mostrar resultados
+    - Libera la memoria para mantener el programa eficiente
+    - Se ejecuta después de mostrar cada conjunto de resultados
+

@@ -1,0 +1,130 @@
+DESCRIPCIÓN DE FUNCIONES - SISTEMA DE BIBLIOTECA CON ÁRBOLES
+==========================================================
+
+Este documento explica qué hace cada función en el programa que maneja una biblioteca
+digital usando cuatro árboles binarios de búsqueda para organizar los libros.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Una colección de libros con: ISBN, título, autor y fecha de publicación
+- Cuatro árboles binarios diferentes, cada uno organizado por un campo distinto
+- Filtros para buscar libros en rangos específicos
+- Búsquedas exactas y aproximadas cuando no se encuentra lo buscado
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El bibliotecario principal
+   - Carga todos los libros desde el archivo de datos
+   - Construye cuatro índices diferentes (como cuatro catálogos distintos)
+   - Presenta un menú para que busques libros de diferentes maneras
+   - Coordina todas las búsquedas y filtros
+
+2. obtener_libros() - El cargador de la biblioteca (en Libro.c)
+   - Lee todos los libros desde un archivo o los carga desde memoria
+   - Proporciona la base de datos completa para trabajar
+   - Es como abrir la biblioteca y tener todos los libros disponibles
+
+3. imprimir() - El mostrador de información de libros (en Libro.c)
+   - Muestra toda la información de un libro de forma clara
+   - Incluye ISBN, título, autor y fecha
+   - Como la ficha técnica de cada libro
+
+4. crearArbol_ISBN() - Constructor del índice por ISBN (en Arbol.c)
+   - Organiza los libros según su código ISBN
+   - Cada ISBN es único, como una cédula de identidad del libro
+   - Permite búsquedas rápidas por código
+
+5. crearArbol_Titulo() - Constructor del índice por título (en Arbol.c)
+   - Organiza los libros alfabéticamente por título
+   - Como un catálogo ordenado de A a Z por nombre del libro
+   - Facilita encontrar libros cuando sabes el título
+
+6. crearArbol_Autor() - Constructor del índice por autor (en Arbol.c)
+   - Organiza los libros alfabéticamente por nombre del autor
+   - Como un directorio de escritores con sus obras
+   - Útil para encontrar todos los libros de un autor específico
+
+7. crearArbol_Fecha() - Constructor del índice por fecha (en Arbol.c)
+   - Organiza los libros cronológicamente por año de publicación
+   - Como una línea del tiempo de la literatura
+   - Permite buscar libros de épocas específicas
+
+8. buscarISBN() - Buscador exacto por código (en Arbol.c)
+   - Busca un libro específico usando su ISBN
+   - Si no lo encuentra, te muestra los códigos más cercanos
+   - Como buscar un producto por su código de barras
+
+9. buscarTitulo() - Buscador por nombre del libro (en Arbol.c)
+   - Busca libros que coincidan exactamente con el título
+   - Si no encuentra exacto, sugiere títulos similares
+   - Como buscar en el catálogo de una librería
+
+10. buscarAutor() - Buscador por escritor (en Arbol.c)
+    - Busca todos los libros de un autor específico
+    - Si no encuentra exacto, sugiere autores con nombres similares
+    - Como buscar en la sección de un autor en la librería
+
+11. imprimirTitulo() - Mostrador de libros por título (en Arbol.c)
+    - Muestra todos los libros que coincidan con un título
+    - Útil cuando hay varios libros con el mismo nombre
+    - Devuelve cuántos libros encontró
+
+12. imprimirAutor() - Mostrador de libros por autor (en Arbol.c)
+    - Muestra todos los libros de un autor específico
+    - Como ver toda la bibliografía de un escritor
+    - Devuelve cuántos libros encontró
+
+13. subconjuntoTitulo() - Filtrador por rango de títulos (en Arbol.c)
+    - Muestra libros cuyos títulos empiecen con ciertas letras
+    - Por ejemplo, todos los títulos que empiecen entre "A" y "M"
+    - Como ver una sección específica del catálogo alfabético
+
+14. subconjuntoAutor() - Filtrador por rango de autores (en Arbol.c)
+    - Muestra libros de autores cuyos nombres estén en un rango
+    - Por ejemplo, autores cuyo apellido empiece entre "G" y "P"
+    - Como revisar una sección específica del directorio de autores
+
+15. subconjuntoFecha() - Filtrador por período de tiempo (en Arbol.c)
+    - Muestra libros publicados en un rango de años
+    - Por ejemplo, todos los libros entre 1990 y 2000
+    - Como estudiar la literatura de una época específica
+
+16. captura_FiltroCHAR() - Capturador de rangos de letras (en Arbol.c)
+    - Te permite especificar un rango de letras para filtrar
+    - Por ejemplo, de "A" a "M" para ver solo esa sección
+    - Hace que sea fácil definir qué parte del alfabeto quieres ver
+
+17. captura_FiltroNUM() - Capturador de rangos de números (en Arbol.c)
+    - Te permite especificar un rango de años para filtrar
+    - Por ejemplo, de 1980 a 2020 para ver libros de esas décadas
+    - Facilita la búsqueda por períodos de tiempo
+
+18. menu() - El mostrador de opciones
+    - Te presenta todas las maneras en que puedes buscar libros
+    - Incluye búsquedas por ISBN, título, autor y fecha
+    - Cada opción tiene sub-opciones para búsquedas exactas o por rangos
+
+¿CÓMO ESTÁ ORGANIZADO EL SISTEMA?
+=================================
+El programa funciona como una biblioteca con cuatro sistemas de catalogación:
+
+**1. Catálogo por ISBN (Código único)**
+- Cada libro tiene un código único
+- Búsqueda exacta y rápida
+- Como buscar un producto por código de barras
+
+**2. Catálogo por Título (Alfabético)**
+- Libros ordenados por nombre de A a Z
+- Permite búsqueda exacta o por rangos de letras
+- Como el catálogo tradicional de una biblioteca
+
+**3. Catálogo por Autor (Por escritor)**
+- Organizado por nombre del autor
+- Puedes ver todos los libros de un escritor
+- Como la sección de un autor en una librería
+
+**4. Catálogo por Fecha (Cronológico)**
+- Organizado por año de publicación
+- Útil para estudios históricos o temáticos
+- Como una línea del tiempo de la literatura

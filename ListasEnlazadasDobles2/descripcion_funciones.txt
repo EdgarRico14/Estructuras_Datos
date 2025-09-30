@@ -1,0 +1,93 @@
+DESCRIPCIÓN DE FUNCIONES - PRÁCTICA 2: LISTAS DOBLES CON FILTROS
+================================================================
+
+Este documento explica qué hace cada función en el programa de listas enlazadas dobles
+que permite filtrar estudiantes por diferentes criterios.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Información de cada estudiante: matrícula, nombre y apellido
+- Listas enlazadas dobles donde cada elemento conoce al anterior y al siguiente
+- Filtros para mostrar solo los estudiantes que cumplen ciertas condiciones
+- Cuatro listas diferentes: principal, filtrada por matrícula, filtrada por apellido, y combinada
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El centro de control del programa
+   - Aquí empieza todo y controla el menú principal
+   - Maneja cuatro listas diferentes de estudiantes
+   - Te permite aplicar filtros para encontrar estudiantes específicos
+   - Se queda corriendo hasta que decides salir
+
+2. inicializar_lista() - Prepara una lista vacía para usar
+   - Cuando necesitas empezar una nueva lista, esta función la prepara
+   - Es como preparar una mesa limpia antes de poner los platos
+
+3. crear_Nodo() - Crea un espacio para un nuevo estudiante
+   - Cada estudiante necesita su propio "contenedor" en la lista
+   - Este contenedor puede conectarse con el anterior y el siguiente
+
+4. agregar_alumno() - Agrega un estudiante al final de la lista
+   - Toma un estudiante nuevo y lo pone al final de la fila
+   - Actualiza las conexiones para que todos sepan quién está antes y después
+
+5. agregar_alumno_ordenado() - Agrega un estudiante en orden alfabético
+   - Encuentra el lugar correcto según el apellido del estudiante
+   - Los mantiene ordenados automáticamente de A a Z
+
+6. crearAlumno() - Te permite registrar un nuevo estudiante
+   - Te pide que captures los datos: matrícula, nombre y apellido
+   - Crea la información del estudiante para agregarla a las listas
+
+7. desplegarAlumno() - Muestra la información de un estudiante
+   - Imprime los datos de manera clara y ordenada
+   - Como mostrar una tarjeta de identificación
+
+8. recorrer_lista() - Muestra todos los estudiantes de una lista
+   - Va estudiante por estudiante mostrando su información
+   - También te dice cuántos estudiantes hay en total
+
+9. recorrer_lista_descendente() - Muestra estudiantes en orden inverso
+   - Empieza por el último estudiante y termina con el primero
+   - Útil para ver la lista al revés
+
+10. eliminar_lista() - Borra toda una lista de estudiantes
+    - Limpia completamente una lista para empezar de nuevo
+    - Libera toda la memoria que ocupaba
+
+11. alumno_existe() - Revisa si un estudiante está en una lista específica
+    - Busca en toda la lista para ver si encuentra al estudiante
+    - Devuelve verdadero si lo encuentra, falso si no
+
+12. actualizar_lista() - Actualiza la lista combinada con nuevos filtros
+    - Toma estudiantes que cumplan ambos filtros (matrícula Y apellido)
+    - Mantiene actualizada la lista de estudiantes que cumplen todos los criterios
+
+13. cumple_filtro_Matricula() - Revisa si una matrícula está en el rango permitido
+    - Verifica si el número de matrícula está entre el mínimo y máximo
+    - Como revisar si alguien tiene la edad correcta para entrar
+
+14. cumple_filtro_Inicial() - Revisa si el apellido empieza con las letras correctas
+    - Verifica si la primera letra del apellido está en el rango permitido
+    - Por ejemplo, solo apellidos que empiecen entre A y M
+
+15. eliminarAlumnoDeTodasLasListas() - Elimina un estudiante de todas las listas
+    - Busca al estudiante por su matrícula y lo elimina de donde esté
+    - Es como borrar a alguien de todos los directorios
+
+16. eliminarAlumnoDeListaPorMatricula() - Elimina un estudiante de una lista específica
+    - Busca y elimina solo de la lista que le digas
+    - Actualiza las conexiones para que la lista siga funcionando
+
+17. recorrer_y_agregarMatricula() - Filtra estudiantes por matrícula
+    - Revisa toda la lista principal y copia solo los que cumplan el filtro de matrícula
+    - Como hacer una lista de solo los estudiantes con ciertos números
+
+18. recorrer_y_agregarInicial() - Filtra estudiantes por apellido
+    - Revisa toda la lista principal y copia solo los que cumplan el filtro de apellido
+    - Como hacer una lista de solo los apellidos que empiecen con ciertas letras
+
+19. menu() - Muestra las opciones disponibles
+    - Te presenta todo lo que puedes hacer en el programa
+    - Incluye opciones para agregar, eliminar, filtrar y mostrar estudiantes

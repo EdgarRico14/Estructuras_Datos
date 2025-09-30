@@ -1,0 +1,62 @@
+DESCRIPCIÓN DE FUNCIONES - PRÁCTICA 1: LISTA DE ESTUDIANTES
+===========================================================
+
+Este documento explica qué hace cada función en el programa Practica1.c, 
+que maneja una lista de estudiantes de forma ordenada.
+
+¿QUÉ INFORMACIÓN MANEJA EL PROGRAMA?
+====================================
+- Información de cada estudiante: número de matrícula, nombre y apellido
+- Una lista donde cada elemento apunta al siguiente (como una cadena)
+- Un control de la lista que sabe dónde empieza, dónde termina y cuántos estudiantes hay
+
+FUNCIONES DEL PROGRAMA:
+=======================
+
+1. main() - El cerebro del programa
+   - Aquí empieza todo cuando ejecutas el programa
+   - Tiene una lista de 5 estudiantes de ejemplo
+   - Te muestra un menú para elegir cómo quieres ordenar la lista
+   - Se queda corriendo hasta que decides salir
+
+2. inicializar_lista() - Prepara una lista vacía
+   - Cuando necesitas empezar una nueva lista, esta función la deja lista
+   - Es como limpiar una pizarra antes de escribir
+
+3. crear_nodo() - Crea un espacio para un nuevo estudiante
+   - Cada vez que quieres agregar un estudiante a la lista, necesitas un "cajón" para guardarlo
+   - Esta función crea ese cajón y pone al estudiante adentro
+
+4. insercionNodoMatriculaAscendente() - Agrega estudiantes ordenados por matrícula
+   - Toma un estudiante y lo pone en su lugar correcto según su número de matrícula
+   - Los números más pequeños van primero, como si fuera una fila ordenada
+
+5. insercionNodoApellidoAscendente() - Agrega estudiantes ordenados por apellido
+   - Similar al anterior, pero ahora ordena por apellido alfabéticamente
+   - Los apellidos que empiezan con A van primero, luego B, C, etc.
+
+6. ordenarListaMatriculaAscendente() - Ordena toda la lista por matrícula
+   - Toma todos los estudiantes y los va agregando uno por uno ordenados por matrícula
+   - Al final tienes una lista completa ordenada de menor a mayor matrícula
+
+7. ordenarListaApellidoAscendente() - Ordena toda la lista por apellido
+   - Hace lo mismo que la anterior, pero ordenando por apellido
+   - Al final los apellidos están en orden alfabético
+
+8. imprimir_alumno() - Muestra la información de un estudiante
+   - Cuando quieres ver los datos de un estudiante específico
+   - Imprime su matrícula, nombre y apellido de forma clara
+
+9. recorrerLista() - Muestra todos los estudiantes de la lista
+   - Va pasando por cada estudiante de la lista y muestra su información
+   - También te dice cuántos estudiantes hay en total
+   - Es como pasar lista en clase
+
+10. liberarMemoria() - Limpia la memoria del programa
+    - Cuando terminas de usar la lista, esta función libera el espacio que ocupaba
+    - Es importante para que el programa no desperdicie memoria de la computadora
+
+11. menu() - Muestra las opciones disponibles
+    - Te presenta las opciones que puedes elegir en el programa
+    - Es la interfaz que ves cuando ejecutas el programa
+
